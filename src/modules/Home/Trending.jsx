@@ -1,18 +1,13 @@
 'use client'
-
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
-import axios from '@/utils/customAxios'
+import { useTrendingQuery } from '@/redux/services/movieApi'
 
 const Trending = () => {
-  const [trendings, setTrendings] = useState([])
-  useEffect(() => {
-    axios.get('/3/trending/movie/day?language=en-US').then((data) => setTrendings(data))
-  }, [])
+  const { data, error, isLoading, isSuccess } = useTrendingQuery()
   return (
     <div>
       <h2 className='text-[1.75rem] font-bold mb-2'>TOP TRENDING</h2>
-      {trendings?.results?.slice(0, 6).map((t, i) => (
+      {data?.results?.slice(0, 6).map((t, i) => (
         <Link
           href={`/movie/${t.id}`}
           key={t.id}
