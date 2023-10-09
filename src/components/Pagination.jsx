@@ -1,17 +1,23 @@
+import { decrement, increment, reset } from '@/redux/features/pageSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import React from 'react'
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from 'react-icons/md'
 
-export const Pagination = ({ pageSize, currentPage, onPageChange }) => {
+export const Pagination = () => {
+  const pageSize = 10
   const pages = Array.from({ length: pageSize }, (_, i) => i + 1)
 
+  const currentPage = useAppSelector((state) => state.pageNumberReducer.currentPage)
+  const dispatch = useAppDispatch();
+
   const handlePrevPage = () => {
-    if (currentPage === 1) return
-    onPageChange(currentPage - 1)
+    dispatch(decrement())
+    if (currentPage === 1) dispatch(reset())
   }
 
   const handleNextPage = () => {
-    if (currentPage === pageSize) return
-    onPageChange(currentPage + 1)
+    dispatch(increment())
+    if (currentPage === 10) dispatch(reset())
   }
 
   return (

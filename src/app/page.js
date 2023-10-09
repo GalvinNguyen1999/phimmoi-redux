@@ -1,19 +1,14 @@
 'use client'
 import Carousel from '@/modules/Home/Carousel'
 import Movies from '@/modules/Home/Movies'
-import { useState, useEffect } from 'react'
-import axios from '@/utils/customAxios'
+import { useMoviesQuery } from '@/redux/services/movieApi'
 
 export default function Home() {
-  const [movies, setMovies] = useState([])
-  useEffect(() => {
-    axios.get('3/movie/popular?language=en-US&page=1').then((data) => setMovies(data))
-  }, [])
-
+  const { data, error, isLoading, isSuccess } = useMoviesQuery();
   return (
     <main className='relative'>
         <Carousel />
-        <Movies movies={movies} />
+        <Movies movies={data} />
     </main>
   )
 }
