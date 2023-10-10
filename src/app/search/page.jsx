@@ -8,8 +8,8 @@ import Button from '@/components/Button'
 const SearchPage = () => {
   const [movies, setMovies] = useState([])
   const [genres, setGenres] = useState([])
-  const [value, setValue] = useState(null)
-  const [year, setYear] = useState(null)
+  const [value, setValue] = useState('')
+  const [year, setYear] = useState(2016)
 
   useEffect(() => {
     axios.get('/3/trending/movie/week?language=en-US').then((data) => setMovies(data))

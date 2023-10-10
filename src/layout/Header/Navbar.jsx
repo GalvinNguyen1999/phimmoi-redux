@@ -1,20 +1,19 @@
 'use client'
-import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { navigations } from '@/utils/constant'
-import axios from '@/utils/customAxios'
 import { useRouter } from 'next/navigation'
 import { listYears } from '@/utils/constant'
+import { useGenreListQuery } from '@/redux/services/movieApi'
+import { useAppDispatch, useAppSelector } from '@/redux/hook'
+import { resetCategoryShow, resetYearShow, setCategoryShow, setYearShow } from '@/redux/features/modalSlice'
 
 const Navbar = ({ className }) => {
-  const [genreList, setGenresList] = useState([])
-  const [isCategoryShow, setCategoryShow] = useState(false)
-  const [isyearShow, setYearShow] = useState(false)
-
-  useEffect(() => {
-    axios.get('/3/genre/movie/list?language=en').then((data) => setGenresList(data))
-  }, [])
   const router = useRouter()
+  const isCategoryShow = useAppSelector((state) => state.modalReducer.isCategoryShow)
+  const isYearShow = useAppSelector((state) => state.modalReducer.isYearShow)
+  const dispatch = useAppDispatch()
+
+  const { data, error, isLoading, isSuccess } = useGenreListQuery()
 
   return (
     <nav className={`${className}`}>
@@ -26,7 +25,7 @@ const Navbar = ({ className }) => {
             id='menu-button'
             aria-expanded='true'
             aria-haspopup='true'
-            onClick={() => setCategoryShow((prev) => !prev)}
+            onClick={() => dispatch(setCategoryShow())}
           >
             category
           </button>
@@ -44,14 +43,14 @@ const Navbar = ({ className }) => {
             className='py-1'
             role='none'
           >
-            {genreList?.genres?.map((genre) => (
+            {data?.genres?.map((genre) => (
               <button
                 key={genre.id}
                 className='text-gray-700 block px-4 py-2 text-sm w-full lg:w-auto'
                 role='menuitem'
                 tabIndex={-1}
                 onClick={() => {
-                  setCategoryShow(false)
+                  dispatch(resetCategoryShow())
                   router.push(`/category/${genre.id}`)
                 }}
               >
@@ -80,14 +79,14 @@ const Navbar = ({ className }) => {
             id='menu-button'
             aria-expanded='true'
             aria-haspopup='true'
-            onClick={() => setYearShow((prev) => !prev)}
+            onClick={() => dispatch(setYearShow())}
           >
             year
           </button>
         </div>
         <div
           className={`absolute left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
-            isyearShow ? 'block' : 'hidden'
+            isYearShow ? 'block' : 'hidden'
           }`}
           role='menu'
           aria-orientation='vertical'
@@ -106,7 +105,7 @@ const Navbar = ({ className }) => {
                 tabIndex={-1}
                 onClick={() => {
                   router.push(`/year/${year?.year}`)
-                  setYearShow(false)
+                  dispatch(resetYearShow())
                 }}
               >
                 {year?.year}

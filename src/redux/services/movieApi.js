@@ -13,12 +13,41 @@ export const movieApi = createApi({
     movies: builder.query({ query: () => '/3/movie/popular?language=en-US&page=1' }),
     trending: builder.query({ query: () => '/3/trending/movie/day?language=en-US' }),
     categorys: builder.query({
-      query: ({ slug, currentPage }) => {
-        console.log(slug, currentPage)
-        return `/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${slug}`
-      }
-    })
+      query: ({ slug, currentPage }) =>
+        `/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=popularity.desc&with_genres=${slug}`
+    }),
+    genreList: builder.query({ query: () => '/3/genre/movie/list?language=en' }),
+    nowPlaying: builder.query({
+      query: ({ currentPage }) => `/3/movie/now_playing?language=en-US&page=${currentPage}`
+    }),
+    upComing: builder.query({ query: ({ currentPage }) => `/3/movie/upcoming?language=en-US&page=${currentPage}` }),
+    popular: builder.query({ query: ({ currentPage }) => `/3/movie/popular?language=en-US&page=${currentPage}` }),
+    year: builder.query({
+      query: (slug) =>
+        `/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=undefined&primary_release_year=${slug}&sort_by=popularity.desc`
+    }),
+    searchForm: builder.query({
+      query: (searchValue) => `/3/search/movie?query=${searchValue}&include_adult=false&language=en-US&page=1`
+    }),
+    moviePage: builder.query({
+      query: (slug) => `/3/movie/${slug}?language=en-US&append_to_response=videos,credits,similar`
+    }),
+    watchMovie: builder.query({
+      query: (slug) => `/3/movie/${slug}?language=en-US&append_to_response=videos,credits,similar`
+    }),
   })
 })
 
-export const { useMoviesQuery, useTrendingQuery, useCategorysQuery } = movieApi
+export const {
+  useMoviesQuery,
+  useTrendingQuery,
+  useCategorysQuery,
+  useGenreListQuery,
+  useNowPlayingQuery,
+  useUpComingQuery,
+  usePopularQuery,
+  useYearQuery,
+  useSearchFormQuery,
+  useMoviePageQuery,
+  useWatchMovieQuery
+} = movieApi

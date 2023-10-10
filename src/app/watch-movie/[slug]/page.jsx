@@ -1,20 +1,16 @@
 'use client'
-import { useState, useEffect } from 'react'
-import axios from '@/utils/customAxios'
 import Credits from '@/modules/Movie/Credits'
 import ReactPlayer from 'react-player/youtube'
 import Button from '@/components/Button'
 import { AiFillDatabase } from 'react-icons/ai'
+import { useAppDispatch, useAppSelector } from '@/redux/hook'
+import { useWatchMovieQuery } from '@/redux/services/movieApi'
+import { selectorCurrenMovie } from '@/redux/features/pageSlice'
 
 const WatchMovieParams = ({ params }) => {
-  const [movie, setMovie] = useState({})
-  const [currentMovie, setCurrentMovie] = useState(0)
-
-  useEffect(() => {
-    axios
-      .get(`/3/movie/${params.slug}?language=en-US&append_to_response=videos,credits,similar`)
-      .then((data) => setMovie(data))
-  }, [params.slug])
+  const currentMovie = useAppSelector((state) => state.pageNumberReducer.currentMovie)
+  const { data, error, isLoading, isSuccess } = useWatchMovieQuery(params?.slug)
+  const dispatch = useAppDispatch()
 
   return (
     <>
@@ -22,7 +18,7 @@ const WatchMovieParams = ({ params }) => {
         width={'100%'}
         controls={true}
         height={500}
-        url={`https://www.youtube.com/watch?v=${movie?.videos?.results[currentMovie]?.key}`}
+        url={`https://www.youtube.com/watch?v=${data?.videos?.results[currentMovie]?.key}`}
       />
 
       <div className='my-2'>
@@ -34,10 +30,10 @@ const WatchMovieParams = ({ params }) => {
         </Button>
 
         <div className='flex flex-wrap gap-1'>
-          {movie?.videos?.results?.map((video, i) => (
+          {data?.videos?.results?.map((video, i) => (
             <Button
               key={video?.id}
-              handleClick={() => setCurrentMovie(i)}
+              handleClick={() => dispatch(selectorCurrenMovie(i))}
               className='bg-blue-500 p-2 text-white hover:opacity-80 transition-all duration-200 md:p-3 lg:p-4'
             >
               {i + 1}
@@ -46,7 +42,7 @@ const WatchMovieParams = ({ params }) => {
         </div>
       </div>
 
-      <Credits movie={movie} />
+      <Credits movie={data} />
     </>
   )
 }

@@ -8,7 +8,7 @@ const Credits = ({ movie }) => {
         {movie?.credits?.cast?.slice(0, 5).map((credit) => (
           <div
             className='relative sm:w-5/12 md:w-3/12 lg:w-2/12'
-            key={credit?.id}
+            key={credit.id}
           >
             <div className='rounded-lg overflow-hidden'>
               <img
@@ -30,7 +30,7 @@ const Credits = ({ movie }) => {
           <div className='md:mb-2'>
             <span className='text-lg font-bold mr-2'>Thể Loại:</span>
             {movie?.genres?.map((genre) => (
-              <span key={genre?.id}>{genre?.name}, </span>
+              <span key={genre.id}>{genre?.name}, </span>
             ))}
           </div>
           <div>
@@ -43,7 +43,7 @@ const Credits = ({ movie }) => {
           <div className='md:mb-2'>
             <span className='text-lg font-bold mr-2'>Quốc gia:</span>
             {movie?.production_countries?.map((countrie) => (
-              <span key={countrie?.id}>{countrie?.name}</span>
+              <span key={countrie.id}>{countrie?.name}</span>
             ))}
           </div>
           <div>
