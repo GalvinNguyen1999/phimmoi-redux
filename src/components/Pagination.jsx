@@ -1,5 +1,5 @@
-import { decrement, increment, reset } from '@/redux/features/pageSlice';
-import { useAppDispatch, useAppSelector } from '@/redux/hook';
+import { decrement, increment, resetPageNumber, selectorPage } from '@/redux/features/pageSlice'
+import { useAppDispatch, useAppSelector } from '@/redux/hook'
 import React from 'react'
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from 'react-icons/md'
 
@@ -8,16 +8,20 @@ export const Pagination = () => {
   const pages = Array.from({ length: pageSize }, (_, i) => i + 1)
 
   const currentPage = useAppSelector((state) => state.pageNumberReducer.currentPage)
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
 
   const handlePrevPage = () => {
     dispatch(decrement())
-    if (currentPage === 1) dispatch(reset())
+    if (currentPage === 1) dispatch(resetPageNumber())
   }
 
   const handleNextPage = () => {
     dispatch(increment())
-    if (currentPage === 10) dispatch(reset())
+    if (currentPage === 10) dispatch(resetPageNumber())
+  }
+
+  const handleSelectorPage = (page) => {
+    dispatch(selectorPage(page))
   }
 
   return (
@@ -35,7 +39,7 @@ export const Pagination = () => {
             className={`hover:bg-slate-300 rounded-full transition-all duration-300 px-2 focus:bg-gray-300 ${
               currentPage === page ? 'bg-gray-300' : ''
             }`}
-            onClick={() => onPageChange(page)}
+            onClick={() => handleSelectorPage(page)}
           >
             {page}
           </button>

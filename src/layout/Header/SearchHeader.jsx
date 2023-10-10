@@ -1,38 +1,37 @@
 'use client'
-import { useState, useEffect } from 'react'
-import axios from '@/utils/customAxios'
 import { BiSearchAlt2 } from 'react-icons/bi'
 import { useRouter } from 'next/navigation'
 import Button from '@/components/Button'
 import Link from 'next/link'
+import { useAppDispatch, useAppSelector } from '@/redux/hook'
+import { onChangeValue, resetSearch } from '@/redux/features/searchSlice'
+import { useSearchFormQuery } from '@/redux/services/movieApi'
+import { isShowSearchResult, resetModalSearch } from '@/redux/features/modalSlice'
 
 const SearchHeader = ({ className }) => {
-  const [setsearchValue, setSetsearchValue] = useState('')
-  const [resultsSearch, setResultsSearch] = useState([])
-  const [isResultShow, setIsResultShow] = useState(false)
   const router = useRouter()
+  const searchValue = useAppSelector((state) => state.searchReducer.value)
+  const isSearchShow = useAppSelector((state) => state.modalReducer.isSearchResultShow)
+  const dispatch = useAppDispatch()
 
-  useEffect(() => {
-    axios
-      .get(`/3/search/movie?query=${setsearchValue}&include_adult=false&language=en-US&page=1`)
-      .then((data) => setResultsSearch(data))
+  const { data, error, isLoading, isSuccess } = useSearchFormQuery(searchValue)
+  const fiveResults = data?.results?.slice(0, 5)
 
-    if (setsearchValue) {
-      setIsResultShow(true)
-    } else {
-      setIsResultShow(false)
-    }
-  }, [setsearchValue])
+
+  if (!!searchValue) {
+    dispatch(isShowSearchResult())
+  } else {
+    dispatch(resetModalSearch())
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
     handleClickSearch()
   }
-  const fiveResults = resultsSearch?.results?.slice(0, 5)
-  
+
   const handleClickSearch = () => {
     router.push(`/search`)
-    setIsResultShow(false)
+    dispatch(resetSearch())
   }
 
   return (
@@ -45,14 +44,12 @@ const SearchHeader = ({ className }) => {
           type='text'
           placeholder='Search Movie...'
           className='px-2 py-1 w-4/5 outline-none'
-          value={setsearchValue}
-          onChange={(e) => {
-            setSetsearchValue(e.target.value)
-          }}
+          value={searchValue}
+          onChange={(e) => dispatch(onChangeValue(e.target.value))}
         />
         <Button
           className='px-4'
-          onClick={() => router.push(`/search`)}
+          onClick={handleClickSearch}
         >
           <BiSearchAlt2
             size={20}
@@ -66,7 +63,7 @@ const SearchHeader = ({ className }) => {
       >
         Search
       </Button>
-      <div className={`absolute bg-white top-10 w-full rounded-md shadow-2xl ${isResultShow ? 'block' : 'hidden'}`}>
+      <div className={`absolute bg-white top-10 w-full rounded-md shadow-2xl ${isSearchShow ? 'block' : 'hidden'}`}>
         <div className='text-gray-500 px-5 py-2'>Movies</div>
         <div className='flex flex-col gap-2 p-2'>
           {fiveResults?.map((fiveResult) => (
@@ -74,7 +71,7 @@ const SearchHeader = ({ className }) => {
               href={`/watch-movie/${fiveResult?.id}`}
               key={fiveResult?.id}
               className='flex border rounded-lg shadow-lg w-full min-h-[80px]'
-              onClick={() => setIsResultShow(false)}
+              onClick={() => dispatch(resetSearch())}
             >
               <div className='rounded-lg overflow-hidden w-1/4 h-full'>
                 <img
