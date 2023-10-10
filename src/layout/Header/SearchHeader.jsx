@@ -1,7 +1,7 @@
 'use client'
 import { BiSearchAlt2 } from 'react-icons/bi'
 import { useRouter } from 'next/navigation'
-import Button from '@/components/Button'
+import Button from '@/components/button'
 import Link from 'next/link'
 import { useAppDispatch, useAppSelector } from '@/redux/hook'
 import { onChangeValue, resetSearch } from '@/redux/features/searchSlice'
