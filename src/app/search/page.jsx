@@ -3,7 +3,7 @@ import Movies from '@/modules/Home/Movies'
 import axios from '@/utils/customAxios'
 import { useEffect, useState } from 'react'
 import { listYears } from '@/utils/constant'
-import Button from '@/components/Button'
+import Button from '@/components/button'
 
 const SearchPage = () => {
   const [movies, setMovies] = useState([])

@@ -1,7 +1,7 @@
 'use client'
 import Credits from '@/modules/Movie/Credits'
 import ReactPlayer from 'react-player/youtube'
-import Button from '@/components/Button'
+import Button from '@/components/button'
 import { AiFillDatabase } from 'react-icons/ai'
 import { useAppDispatch, useAppSelector } from '@/redux/hook'
 import { useWatchMovieQuery } from '@/redux/services/movieApi'

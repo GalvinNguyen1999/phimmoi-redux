@@ -1,6 +1,6 @@
 'use client'
 import Movies from '@/modules/Home/Movies'
-import { Pagination } from '@/components/Pagination'
+import { Pagination } from '@/components/pagination'
 import { usePopularQuery } from '@/redux/services/movieApi'
 import { useAppSelector } from '@/redux/hook'
 
