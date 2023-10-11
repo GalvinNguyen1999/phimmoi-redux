@@ -1,8 +1,8 @@
 'use client'
 import Movies from '@/modules/Home/Movies'
-import { Pagination } from '@/components/pagination'
 import { useCategorysQuery } from '@/redux/services/movieApi'
 import { useAppSelector } from '@/redux/hook'
+import Pagination from '@/components/Pagination'
 
 export default function CategoryPage({ params }) {
   const currentPage = useAppSelector((state) => state.pageNumberReducer.currentPage)

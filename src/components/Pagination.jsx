@@ -1,9 +1,9 @@
+import React from 'react'
 import { decrement, increment, resetPageNumber, selectorPage } from '@/redux/features/pageSlice'
 import { useAppDispatch, useAppSelector } from '@/redux/hook'
-import React from 'react'
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from 'react-icons/md'
 
-export const Pagination = () => {
+const Pagination = () => {
   const pageSize = 10
   const pages = Array.from({ length: pageSize }, (_, i) => i + 1)
 
@@ -54,3 +54,5 @@ export const Pagination = () => {
     </div>
   )
 }
+
+export default Pagination
