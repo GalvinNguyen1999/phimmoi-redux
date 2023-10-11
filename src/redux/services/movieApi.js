@@ -35,6 +35,10 @@ export const movieApi = createApi({
     watchMovie: builder.query({
       query: (slug) => `/3/movie/${slug}?language=en-US&append_to_response=videos,credits,similar`
     }),
+    resultSearchPage: builder.query({
+      query: ({ year, valueSearch }) =>
+        `/3/discover/movie?include_adult=false&include_video=true&language=en-US&page=1&primary_release_year=${year}&sort_by=popularity.desc&with_genres=${valueSearch}&query=wonder`
+    })
   })
 })
 
@@ -49,5 +53,6 @@ export const {
   useYearQuery,
   useSearchFormQuery,
   useMoviePageQuery,
-  useWatchMovieQuery
+  useWatchMovieQuery,
+  useResultSearchPageQuery
 } = movieApi

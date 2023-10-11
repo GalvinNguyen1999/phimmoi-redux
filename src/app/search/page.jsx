@@ -1,42 +1,46 @@
 'use client'
 import Movies from '@/modules/Home/Movies'
-import axios from '@/utils/customAxios'
-import { useEffect, useState } from 'react'
 import { listYears } from '@/utils/constant'
 import Button from '@/components/button'
+import { useGenreListQuery, useResultSearchPageQuery } from '@/redux/services/movieApi'
+import { useAppDispatch, useAppSelector } from '@/redux/hook'
+import { setValueSearchPage, setYear } from '@/redux/features/searchSlice'
 
 const SearchPage = () => {
-  const [movies, setMovies] = useState([])
-  const [genres, setGenres] = useState([])
-  const [value, setValue] = useState('')
-  const [year, setYear] = useState(2016)
+  const dispatch = useAppDispatch()
+  const valueSearch = useAppSelector((state) => state.searchReducer.valueSearchPage)
+  const year = useAppSelector((state) => state.searchReducer.year)
 
-  useEffect(() => {
-    axios.get('/3/trending/movie/week?language=en-US').then((data) => setMovies(data))
-    axios.get('/3/genre/movie/list?language=en').then((data) => setGenres(data))
-  }, [])
+  // UseQuery for GenreList
+  const {
+    data: genreData,
+    error: genreError,
+    isLoading: genreIsLoading,
+    isSuccess: genreIsSuccess
+  } = useGenreListQuery()
 
-  const handleSearch = () => {
-    axios
-      .get(
-        `/3/discover/movie?include_adult=false&include_video=true&language=en-US&page=1&primary_release_year=${year}&sort_by=popularity.desc&with_genres=${value}&query=wonder`,
-      )
-      .then((data) => setMovies(data))
-  }
+  const {
+    data: resultData,
+    error: resultError,
+    isLoading: resultIsLoading,
+    isSuccess: resultIsSuccess
+  } = useResultSearchPageQuery({ year, valueSearch })
+
+  const handleSearch = () => {}
 
   return (
     <div>
       <div className='flex items-center gap-3'>
         <select
-          value={value}
+          value={valueSearch}
           name='category'
           id='category'
           className='border p-4 rounded-sm'
           onChange={(e) => {
-            setValue(e.target.value)
+            dispatch(setValueSearchPage(e.target.value))
           }}
         >
-          {genres?.genres?.map((genre) => (
+          {genreData?.genres?.map((genre) => (
             <option
               key={genre.id}
               value={genre?.id}
@@ -52,7 +56,7 @@ const SearchPage = () => {
           id='category'
           className='border p-4 rounded-sm'
           onChange={(e) => {
-            setYear(e.target.value)
+            dispatch(setYear(e.target.value))
           }}
         >
           {listYears?.map((listYear, i) => (
@@ -71,7 +75,7 @@ const SearchPage = () => {
           Search
         </Button>
       </div>
-      <Movies movies={movies} />
+      <Movies movies={resultData} />
     </div>
   )
 }
