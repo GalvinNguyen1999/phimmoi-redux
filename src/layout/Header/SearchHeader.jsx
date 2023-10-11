@@ -1,12 +1,12 @@
 'use client'
 import { BiSearchAlt2 } from 'react-icons/bi'
 import { useRouter } from 'next/navigation'
-import Button from '@/components/button'
 import Link from 'next/link'
 import { useAppDispatch, useAppSelector } from '@/redux/hook'
 import { onChangeValue, resetSearch } from '@/redux/features/searchSlice'
 import { useSearchFormQuery } from '@/redux/services/movieApi'
 import { isShowSearchResult, resetModalSearch } from '@/redux/features/modalSlice'
+import Button from '@/components/Button'
 
 const SearchHeader = ({ className }) => {
   const router = useRouter()
@@ -16,7 +16,6 @@ const SearchHeader = ({ className }) => {
 
   const { data, error, isLoading, isSuccess } = useSearchFormQuery(searchValue)
   const fiveResults = data?.results?.slice(0, 5)
-
 
   if (!!searchValue) {
     dispatch(isShowSearchResult())

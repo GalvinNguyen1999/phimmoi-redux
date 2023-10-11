@@ -1,8 +1,8 @@
 import MenuMobile from './MenuMobile'
 import SearchHeader from './SearchHeader'
 import Navbar from './Navbar'
-import Button from '@/components/button'
 import Logo from './Logo'
+import Button from '@/components/Button'
 
 const Header = () => {
   return (

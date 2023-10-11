@@ -1,10 +1,10 @@
 'use client'
 import Movies from '@/modules/Home/Movies'
 import { listYears } from '@/utils/constant'
-import Button from '@/components/button'
 import { useGenreListQuery, useResultSearchPageQuery } from '@/redux/services/movieApi'
 import { useAppDispatch, useAppSelector } from '@/redux/hook'
 import { setValueSearchPage, setYear } from '@/redux/features/searchSlice'
+import Button from '@/components/Button'
 
 const SearchPage = () => {
   const dispatch = useAppDispatch()
