@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { listYears } from '@/utils/constant'
 import { useGenreListQuery } from '@/redux/services/movieApi'
 import { useAppDispatch, useAppSelector } from '@/redux/hook'
-import { resetCategoryShow, resetYearShow, setCategoryShow, setYearShow } from '@/redux/features/modalSlice'
+import { resetCategoryShow, resetToggleMobileMenu, resetYearShow, setCategoryShow, setResetToggleMobileMenu, setYearShow } from '@/redux/features/modalSlice'
 
 const Navbar = ({ className }) => {
   const router = useRouter()
@@ -51,6 +51,7 @@ const Navbar = ({ className }) => {
                 tabIndex={-1}
                 onClick={() => {
                   dispatch(resetCategoryShow())
+                  dispatch(setResetToggleMobileMenu())
                   router.push(`/category/${genre.id}`)
                 }}
               >
@@ -66,6 +67,11 @@ const Navbar = ({ className }) => {
           key={i}
           href={n.href}
           className='text-blue-500 font-medium px-4 hover:text-blue-900 uppercase'
+          onClick={() => {
+            dispatch(resetToggleMobileMenu())
+            dispatch(resetCategoryShow())
+            dispatch(resetYearShow())
+          }}
         >
           {n.title}
         </Link>
@@ -106,6 +112,7 @@ const Navbar = ({ className }) => {
                 onClick={() => {
                   router.push(`/year/${year?.year}`)
                   dispatch(resetYearShow())
+                  dispatch(setResetToggleMobileMenu())
                 }}
               >
                 {year?.year}
