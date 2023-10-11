@@ -5,6 +5,7 @@ import { AiFillDatabase } from 'react-icons/ai'
 import { useAppDispatch, useAppSelector } from '@/redux/hook'
 import { useWatchMovieQuery } from '@/redux/services/movieApi'
 import { selectorCurrenMovie } from '@/redux/features/pageSlice'
+import Button from '@/components/Button'
 
 const WatchMovieParams = ({ params }) => {
   const currentMovie = useAppSelector((state) => state.pageNumberReducer.currentMovie)
