@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   isSearchResultShow: false,
   isCategoryShow: false,
-  isYearShow: false
+  isYearShow: false,
+  toggleMobileMenu: false
 }
 
 export const modal = createSlice({
@@ -29,10 +30,25 @@ export const modal = createSlice({
     },
     setYearShow: (state) => {
       state.isYearShow = !state.isYearShow
+    },
+
+    resetToggleMobileMenu: (state) => {
+      state.toggleMobileMenu = initialState.toggleMobileMenu
+    },
+    setResetToggleMobileMenu: (state) => {
+      state.toggleMobileMenu = !state.toggleMobileMenu
     }
   }
 })
 
-export const { isShowSearchResult, resetModalSearch, resetCategoryShow, setCategoryShow, resetYearShow, setYearShow } =
-  modal.actions
+export const {
+  isShowSearchResult,
+  resetModalSearch,
+  resetCategoryShow,
+  setCategoryShow,
+  resetYearShow,
+  setYearShow,
+  resetToggleMobileMenu,
+  setResetToggleMobileMenu
+} = modal.actions
 export default modal.reducer

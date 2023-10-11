@@ -18,7 +18,7 @@ const Movies = ({ movies }) => {
               />
               <div className='absolute w-full bg-[rgba(0,0,0,0.5)] text-white text-sm text-center opacity-100 transition-opacity duration-[0.3s] ease-[ease-in-out] p-2.5 left-0 bottom-0'>
                 <h6>{m.title}</h6>
-                <p>{m.title}</p>
+                <p className='line-clamp-3 lg:line-clamp-2'>{m.overview}</p>
               </div>
             </div>
           </Link>
