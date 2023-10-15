@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* navigation */
+.navigation_button {
+  @apply text-gray-700 font-medium text-lg px-4 py-2 hover:bg-gray-500 hover:text-gray-200 capitalize w-full rounded-md transition-all duration-200;
+}
+
+.sub-navigation_button {
+  @apply text-gray-700 font-medium text-lg px-4 py-1 hover:bg-gray-500 hover:text-gray-200 capitalize flex items-center justify-between gap-1 w-full rounded-md transition-all duration-200;
+}
