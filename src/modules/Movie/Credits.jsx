@@ -2,7 +2,7 @@ import { BsStar, BsStarHalf, BsStarFill, BsFillCalendar2RangeFill } from 'react-
 
 const Credits = ({ movie }) => {
   return (
-    <section className='md:pb-2'>
+    <section className='md:pb-2 text-gray-200'>
       <h3 className='text-2xl font-bold my-2'>Credits: </h3>
       <div className='p-4 flex flex-col sm:flex-wrap sm:flex-row gap-2 sm:gap-5 justify-center border-b border-gray-500'>
         {movie?.credits?.cast?.slice(0, 5).map((credit) => (
@@ -67,10 +67,10 @@ const Credits = ({ movie }) => {
         </div>
       </div>
 
-      <div className='border mb-4 rounded-lg overflow-hidden'>
+      <div className='mb-4 rounded-lg overflow-hidden'>
         <div className='flex items-center bg-green-800 p-4 gap-2'>
           <BsFillCalendar2RangeFill size={50} className='text-blue-500' />
-          <h5 className='font-bold text-gray-900 '>PHIM CHIẾU 1 TẬP MỖI TRƯA THỨ 5 HÀNG TUẦN</h5>
+          <h5 className='font-bold text-gray-200 '>PHIM CHIẾU 1 TẬP MỖI TRƯA THỨ 5 HÀNG TUẦN</h5>
         </div>
         <div className='p-4 bg-gray-500'>
           <div className='text-white font-bold text-xl mb-1'>Nội dung phim</div>

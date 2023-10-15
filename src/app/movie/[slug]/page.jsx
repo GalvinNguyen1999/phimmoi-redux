@@ -12,21 +12,21 @@ const MoviePageParams = ({ params }) => {
     <div>
       <div
         style={{
-          backgroundImage: `url("https://image.tmdb.org/t/p/original${data?.backdrop_path}")`
+          backgroundImage: `url("https://image.tmdb.org/t/p/original/${data?.backdrop_path}")`
         }}
         className='w-full h-[400px] lg:h-[500px] bg-blend-darken bg-[#000000ad] bg-no-repeat sm:bg-cover relative rounded-md'
       >
-        <div className='text-white absolute pr-[10%] left-[10%] bottom-[2%] mb-4'>
+        <div className='text-gray-100 absolute pr-[10%] left-[10%] bottom-[2%] mb-4'>
           <div className='flex flex-wrap md:flex-nowrap gap-4 w-full'>
-            <div className='hidden md:block max-w-full'>
+            <div className='hidden md:block w-4/12'>
               <img
                 src={`https://image.tmdb.org/t/p/w300${data?.poster_path}`}
-                className='rounded-md w-full h-full border'
+                className='rounded-md w-full h-full'
                 alt={data?.original_title}
               />
             </div>
 
-            <div className=''>
+            <div className='w-full lg:w-6/12 flex flex-col'>
               <h3 className='text-xl font-bold'>{data?.original_title}</h3>
               <br />
               <h5 className='md:flex items-center gap-2'>
@@ -40,7 +40,7 @@ const MoviePageParams = ({ params }) => {
                 ))}
                 <span>run time: {data?.runtime}'</span>
               </h5>
-              <div className='my-3'>
+              <div className='my-3 flex-1'>
                 <h3 className='mb-1'>Overview</h3>
                 <p className='text-sm line-clamp-3 sm:line-clamp-none '>{data?.overview}</p>
               </div>

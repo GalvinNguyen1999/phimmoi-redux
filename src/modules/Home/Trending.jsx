@@ -4,15 +4,16 @@ import { useTrendingQuery } from '@/redux/services/movieApi'
 
 const Trending = () => {
   const { data, error, isLoading, isSuccess } = useTrendingQuery()
+  console.log('data: ', data)
   return (
-    <div>
-      <h2 className='text-[1.75rem] font-bold mb-2'>TOP TRENDING</h2>
+    <div className='text-gray-200'>
+      <h2 className='text-[1.75rem] italic font-bold mb-2 uppercase'>top trending</h2>
       {data?.results?.slice(0, 6).map((t, i) => (
         <Link
           href={`/movie/${t.id}`}
           key={t.id}
         >
-          <div className='border rounded-md mb-4 overflow-hidden'>
+          <div className='mb-4 overflow-hidden bg-gray-700 rounded-2xl hover:border'>
             <div className='flex flex-wrap'>
               <div className='w-1/3'>
                 <img
@@ -23,9 +24,10 @@ const Trending = () => {
               </div>
               <div className='w-2/3'>
                 <div className='p-4'>
-                  <h5 className='mb-2'>{t.title}</h5>
+                  <h5 className='mb-2 text-lg font-medium line-clamp-2'>{t.title}</h5>
+                  <p className='line-clamp-2'>{t?.overview}</p>
                   <p>
-                    <small className='text-gray-500'>lượt xem: {t.popularity}</small>
+                    <small className='text-gray-300'>lượt xem: {t.popularity}</small>
                   </p>
                 </div>
               </div>

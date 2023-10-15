@@ -25,7 +25,7 @@ const Pagination = () => {
   }
 
   return (
-    <div className='flex justify-center items-center gap-2'>
+    <div className='flex justify-center items-center gap-2 text-gray-100'>
       <button
         onClick={handlePrevPage}
         className='hover:bg-slate-300 rounded-full transition-all duration-300'
@@ -37,7 +37,7 @@ const Pagination = () => {
           <button
             key={i}
             className={`hover:bg-slate-300 rounded-full transition-all duration-300 px-2 focus:bg-gray-300 ${
-              currentPage === page ? 'bg-gray-300' : ''
+              currentPage === page ? 'bg-gray-300 text-gray-900' : ''
             }`}
             onClick={() => handleSelectorPage(page)}
           >

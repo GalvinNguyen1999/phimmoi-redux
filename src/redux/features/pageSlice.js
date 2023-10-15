@@ -2,7 +2,10 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   currentPage: 1,
-  currentMovie: 0
+  currentMovie: 0,
+  carousel: {
+    currenIndex: 0
+  }
 }
 
 export const pageNumber = createSlice({
@@ -11,7 +14,7 @@ export const pageNumber = createSlice({
   reducers: {
     // Pagination
     resetPageNumber: (state) => {
-      state.currentPage = initialState.currentPage;
+      state.currentPage = initialState.currentPage
     },
     increment: (state) => {
       state.currentPage += 1
@@ -29,9 +32,36 @@ export const pageNumber = createSlice({
     },
     selectorCurrenMovie: (state, action) => {
       state.currentMovie = action.payload
+    },
+
+    // Curren Index Movie Carousel
+    resetCurrentIndex: (state) => {
+      state.carousel.currenIndex = initialState.carousel.currenIndex
+    },
+    setCurrentIndexNext: (state) => {
+      if (state.carousel.currenIndex >= 9) {
+        state.carousel.currenIndex = 0
+      }
+      state.carousel.currenIndex += 1
+    },
+    setCurrentIndexPrev: (state) => {
+      if (state.carousel.currenIndex === 0 ) {
+        state.carousel.currenIndex = 10
+      }
+      state.carousel.currenIndex -= 1
     }
   }
 })
 
-export const { increment, decrement, resetPageNumber, selectorPage, resetCurrenMovie, selectorCurrenMovie } = pageNumber.actions
+export const {
+  increment,
+  decrement,
+  resetPageNumber,
+  selectorPage,
+  resetCurrenMovie,
+  selectorCurrenMovie,
+  resetCurrentIndex,
+  setCurrentIndexNext,
+  setCurrentIndexPrev
+} = pageNumber.actions
 export default pageNumber.reducer
