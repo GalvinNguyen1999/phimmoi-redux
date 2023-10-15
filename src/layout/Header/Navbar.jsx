@@ -5,7 +5,15 @@ import { useRouter } from 'next/navigation'
 import { listYears } from '@/utils/constant'
 import { useGenreListQuery } from '@/redux/services/movieApi'
 import { useAppDispatch, useAppSelector } from '@/redux/hook'
-import { resetCategoryShow, resetToggleMobileMenu, resetYearShow, setCategoryShow, setResetToggleMobileMenu, setYearShow } from '@/redux/features/modalSlice'
+import {
+  resetCategoryShow,
+  resetToggleMobileMenu,
+  resetYearShow,
+  setCategoryShow,
+  setResetToggleMobileMenu,
+  setYearShow
+} from '@/redux/features/modalSlice'
+import { IoIosArrowDown, IoIosArrowForward } from 'react-icons/io'
 
 const Navbar = ({ className }) => {
   const router = useRouter()
@@ -21,13 +29,14 @@ const Navbar = ({ className }) => {
         <div>
           <button
             type='button'
-            className='text-blue-500 font-medium px-4 hover:text-blue-900 uppercase'
+            className='navigation_button flex items-center justify-between gap-1'
             id='menu-button'
             aria-expanded='true'
             aria-haspopup='true'
             onClick={() => dispatch(setCategoryShow())}
           >
             category
+            {!!isCategoryShow ? <IoIosArrowDown /> : <IoIosArrowForward />}
           </button>
         </div>
         <div
@@ -46,7 +55,7 @@ const Navbar = ({ className }) => {
             {data?.genres?.map((genre) => (
               <button
                 key={genre.id}
-                className='text-gray-700 block px-4 py-2 text-sm w-full lg:w-auto'
+                className='sub-navigation_button'
                 role='menuitem'
                 tabIndex={-1}
                 onClick={() => {
@@ -66,7 +75,7 @@ const Navbar = ({ className }) => {
         <Link
           key={i}
           href={n.href}
-          className='text-blue-500 font-medium px-4 hover:text-blue-900 uppercase'
+          className='navigation_button lg:leading-tight lg:whitespace-nowrap'
           onClick={() => {
             dispatch(resetToggleMobileMenu())
             dispatch(resetCategoryShow())
@@ -81,17 +90,18 @@ const Navbar = ({ className }) => {
         <div>
           <button
             type='button'
-            className='text-blue-500 font-medium px-4 hover:text-blue-900 uppercase'
+            className='navigation_button text-start flex items-center justify-between gap-1'
             id='menu-button'
             aria-expanded='true'
             aria-haspopup='true'
             onClick={() => dispatch(setYearShow())}
           >
             year
+            {!!isYearShow ? <IoIosArrowDown /> : <IoIosArrowForward />}
           </button>
         </div>
         <div
-          className={`absolute left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
+          className={`absolute left-0 z-10 mt-2 w-full lg:w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
             isYearShow ? 'block' : 'hidden'
           }`}
           role='menu'
@@ -106,7 +116,7 @@ const Navbar = ({ className }) => {
             {listYears?.map((year) => (
               <button
                 key={year.id}
-                className='text-gray-700 block px-4 py-2 text-sm'
+                className='sub-navigation_button'
                 role='menuitem'
                 tabIndex={-1}
                 onClick={() => {

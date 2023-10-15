@@ -1,5 +1,6 @@
 'use client'
 import { BiSearchAlt2 } from 'react-icons/bi'
+import { TbFilterSearch } from 'react-icons/tb'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useAppDispatch, useAppSelector } from '@/redux/hook'
@@ -42,34 +43,33 @@ const SearchHeader = ({ className }) => {
         <input
           type='text'
           placeholder='Search Movie...'
-          className='px-2 py-1 w-4/5 outline-none'
+          className='py-1 w-4/5 outline-none bg-transparent text-gray-900'
           value={searchValue}
           onChange={(e) => dispatch(onChangeValue(e.target.value))}
         />
         <Button
-          className='px-4'
+          className='text-gray-900 hover:bg-gray-500 mr-2 rounded-full transition-all duration-200 border-0'
           onClick={handleClickSearch}
         >
-          <BiSearchAlt2
-            size={20}
-            className='text-gray-500 hover:text-black'
-          />
+          <BiSearchAlt2 size={24} />
         </Button>
       </form>
       <Button
         handleClick={handleClickSearch}
-        className='border-green-500 hover:bg-green-500 hidden lg:block'
+        className='border-green-500 hover:bg-green-600 hidden lg:flex transition-all duration-200 items-center gap-1 text-lg font-medium'
       >
         Search
+        <TbFilterSearch size={16} />
       </Button>
-      <div className={`absolute bg-white top-10 w-full rounded-md shadow-2xl ${isSearchShow ? 'block' : 'hidden'}`}>
-        <div className='text-gray-500 px-5 py-2'>Movies</div>
+      {!!isSearchShow && (
+        <div className={`absolute bg-gray-100 border rounded-lg top-12 w-full shadow-lg`}>
+        <div className='text-gray-900 font-medium text-sm p-2 capitalize border-b '>result search :</div>
         <div className='flex flex-col gap-2 p-2'>
           {fiveResults?.map((fiveResult) => (
             <Link
               href={`/watch-movie/${fiveResult?.id}`}
               key={fiveResult?.id}
-              className='flex border rounded-lg shadow-lg w-full min-h-[80px]'
+              className='flex border border-gray-300 rounded-lg shadow-md hover:shadow-xl hover:border-gray-500 transition-all duration-200 w-full min-h-[80px]'
               onClick={() => dispatch(resetSearch())}
             >
               <div className='rounded-lg overflow-hidden w-1/4 h-full'>
@@ -81,12 +81,14 @@ const SearchHeader = ({ className }) => {
               </div>
               <div className='p-2 w-3/4'>
                 <h5 className='font-bold  leading-tight mb-1'>{fiveResult?.title}</h5>
-                <p className='text-sm text-gray-500'>{fiveResult?.original_title}</p>
+                <p className='text-sm text-gray-700 line-clamp-3'>{fiveResult?.overview || 'Loading...'}</p>
               </div>
             </Link>
           ))}
         </div>
       </div>
+      ) }
+      
     </div>
   )
 }
