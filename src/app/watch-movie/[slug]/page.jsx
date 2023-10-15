@@ -24,7 +24,7 @@ const WatchMovieParams = ({ params }) => {
       <div className='my-2'>
         <Button
           leftIcon={<AiFillDatabase />}
-          className='bg-green-500 hover:opacity-50 flex items-center gap-2 transition-all duration-200 mb-3'
+          className='bg-green-500 border-0 text-gray-100 hover:opacity-50 flex items-center gap-2 transition-all duration-200 mb-3'
         >
           Server #1
         </Button>
@@ -34,7 +34,7 @@ const WatchMovieParams = ({ params }) => {
             <Button
               key={video?.id}
               handleClick={() => dispatch(selectorCurrenMovie(i))}
-              className='bg-blue-500 p-2 text-white hover:opacity-80 transition-all duration-200 md:p-3 lg:p-4'
+              className='bg-blue-500 p-2 text-white hover:opacity-80 transition-all duration-200 md:p-3 lg:px-4 lg:py-2 border-0'
             >
               {i + 1}
             </Button>
